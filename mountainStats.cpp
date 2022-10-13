@@ -49,10 +49,30 @@ void printMountainStats(string filename)
 {
     // reference - int split(string input_string, char separator, string arr[],int arr_size)
     string line;
-    
     ifstream filename;
-    
-    my_file.open()
+    my_file.open(filename);
+    //int size = 1000;
+    string my_arr[];
+    int newArr[];
+    char separator = '|';
+    int max;
+
+    if(filename.fail())
+    {
+        cout << "Could not open file." << endl;
+    }
+
+    while(!filename.eof())
+    {
+        // reading one line at a time
+        getline(filename, line);
+
+        split(line, separator, my_arr, sizeof(my_arr)/sizeof(string));
+
+        newArr[1] = stoi(my_arr[1]) 
+        max = newArr;
+
+    }
 
 
     cout << "Number of lines read: " <<  << "." << endl;
