@@ -10,7 +10,6 @@
 
 using namespace std; 
 
-
 int split(string input_string, char separator, string arr[],int arr_size)
 {
     int len = input_string.length();
@@ -49,35 +48,65 @@ void printMountainStats(string filename)
 {
     // reference - int split(string input_string, char separator, string arr[],int arr_size)
     string line;
-    ifstream filename;
-    my_file.open(filename);
-    //int size = 1000;
-    string my_arr[];
-    int newArr[];
+    int size = 3;
     char separator = '|';
-    int max;
+    string tempArr[2];
+    string mountains[size];
+    int heights[size];
 
-    if(filename.fail())
+    int max = heights[0];
+    int min = heights[0]; 
+    int counter = 0; 
+    int indexMax = -1;
+    int indexMin = -1;
+    
+    ifstream in_file;
+    in_file.open(filename);
+
+    if(in_file.fail())
     {
         cout << "Could not open file." << endl;
+        return;
     }
+    else
+    {    
+        while(!in_file.eof())
+        {
+            // reading one line at a time
+            getline(in_file, line);
 
-    while(!filename.eof())
+            split(line, separator, tempArr, size); 
+
+            string mountain_names = tempArr[0]; 
+            int mountain_height = stoi(tempArr[1]);
+
+            mountains[counter] = mountain_names;
+            heights[counter] = mountain_height;
+
+            mountain_names = "";
+            mountain_height = 0;
+            counter++;            
+
+        }        
+    }
+    
+    for(int i = 0; i < size ; i++)
     {
-        // reading one line at a time
-        getline(filename, line);
-
-        split(line, separator, my_arr, sizeof(my_arr)/sizeof(string));
-
-        newArr[1] = stoi(my_arr[1]) 
-        max = newArr;
-
+        if(max < heights[i])
+        {
+            max = heights[i];
+            indexMax = i; // telling us the index where that max is at
+        }
+        if(min > heights[i])
+        {
+            min = heights[i];
+            indexMin = i;
+        }
     }
 
-
-    cout << "Number of lines read: " <<  << "." << endl;
-    cout << "Tallest mountain: "  << << " at " << << " feet." << endl;
-    cout << "Shortest mountain: "  << << " at " << << " feet." << endl;
+    cout << "Number of lines read: " << counter  << "." << endl;  
+    cout << "Tallest mountain: " << mountains[indexMax] << " at " << heights[indexMax] << " feet." << endl;
+    cout << "Smallest mountain: " << mountains[indexMin] << " at " << heights[indexMin] << " feet." << endl;
 
     return;
 
@@ -85,6 +114,8 @@ void printMountainStats(string filename)
 
 int main()
 {
+    string filename = "mountain_data.txt";
 
+    printMountainStats(filename);
 
 }
